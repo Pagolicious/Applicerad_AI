@@ -1,6 +1,8 @@
 from flask import Flask
 from os import path
 from datetime import datetime
+from pymongo.collection import Collection
+
 
 from flask_login import UserMixin, LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -11,12 +13,31 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 
-class Users(db.Model):
+# class Post(db.Model):
+#     post_id = db.Column(db.Integer, primary_key=True)
+#     title = db.Column(db.String(100))
+#     location = db.Column(db.String(100))
+#     company_profile = db.Column(db.String(1000))
+#     has_company_logo = db.Column(db.Boolean())
+#     employment_type = db.Column(db.String(100))
+#     industry = db.Column(db.String(100))
+#     is_posted_since = db.Column(db.DateTime, default=datetime)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username =db.Column(db.String(200), nullable=False, unique=True)
+    username = db.Column(db.String(200), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False, unique=True)
     # account_added = db.Column(db.DateTime, default=datetime)
     password_hash = db.Column(db.String(100))
+    # posts = db.relationship('Post')
+
+    # def __init__(self, id, username, email, password_hash):
+    #     self.id = id
+    #     self.username = username
+    #     self.email = email
+    #     self.password_hash = password_hash
 
     @property
     def password(self):
@@ -32,27 +53,35 @@ class Users(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-    def is_authenticated(self):
-        return True
+    # def is_authenticated(self):
+    #     return True
+    #
+    # def is_active(self):
+    #     return True
+    #
+    # def is_anonymous(self):
+    #     return False
+    #
+    # def get_id(self):
+    #     return self.username
 
-    def is_active(self):
-        return True
 
-    def is_anonymous(self):
-        return False
+# class User:
+#     collection: Collection = db.users
+#
+#     def is_authenticated(self):
+#         return True
+#
+#     def is_active(self):
+#         return True
+#
+#     def is_anonymous(self):
+#         return False
+#
+#     def get_id(self):
+#         return self.username
 
-    def get_id(self):
-        return self.username
 
-class JobAd(db.Model):
-    job_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100))
-    location = db.Column(db.String(100))
-    company_profile = db.Column(db.String(1000))
-    has_company_logo = db.Column(db.Boolean())
-    employment_type = db.Column(db.String(100))
-    industry = db.Column(db.String(100))
-    is_posted_since = db.Column(db.DateTime, default=datetime)
 
 
 def create_app():

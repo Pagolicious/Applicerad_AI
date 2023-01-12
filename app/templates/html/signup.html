@@ -1,33 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <div>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-
-            {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-control") }}
-
-            <br/>
-            {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control") }}
-            <br/>
-            {{ form.password_hash.label(class="form-label") }}
-            {{ form.password_hash(class="form-control") }}
-            <br/>
-            {{ form.repeat_pass.label(class="form-label") }}
-            {{ form.repeat_pass(class="form-control") }}
-            <br/>
-            {{ form.create_user(class="btn btn-secondary") }}
+{% extends 'html/base.html' %}
 
 
-
-        </form>
-
+{% block content %}
+    {% for messeage in get_flashed_messages() %}
+        <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+        <div class="toast-body">
+            {{ messeage }}
     </div>
-</body>
-</html>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+    {% endfor %}
+    <div class="shadow p-3 mb-5 bg-body rounded">
+
+    <form method="POST">
+         {{ form.hidden_tag() }}
+        <br/>
+         {{ form.email.label(class="form-label") }}
+         {{ form.email(class="form-control") }}
+         <br/>
+         {{ form.username.label(class="form-label") }}
+         {{ form.username(class="form-control") }}
+         <br/>
+         {{ form.password_hash.label(class="form-label") }}
+         {{ form.password_hash(class="form-control") }}
+        <span id="passwordHelpInline" class="form-text">
+            Must be 4-20 characters long.
+        </span>
+        <br/>
+         <br/>
+         {{ form.repeat_pass.label(class="form-label") }}
+         {{ form.repeat_pass(class="form-control") }}
+         <br/>
+         {{ form.create_user(class="btn btn-secondary") }}
+    </form>
+    </div>
+
+{% endblock %}
