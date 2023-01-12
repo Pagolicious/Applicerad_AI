@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, TextAreaField
 from wtforms.validators import Length, DataRequired, EqualTo, InputRequired
 
 
 class WorkForm(FlaskForm):
 
-    title = StringField('Title: ', validators=[DataRequired(message='Please enter a Title'), Length(3, 25)])
+    title = StringField('Title: ', validators=[DataRequired(message='Please enter a Title'), Length(4, 20)])
 
     location = StringField('Location: ')
-    company_profile = StringField('Company Profile: ')
-    has_company_logo = BooleanField('Company logo: ', validators=[DataRequired(message='Please confirm if you have '
+    company_profile = TextAreaField('Company Profile: ')
+    has_company_logo = BooleanField('', validators=[DataRequired(message='Please confirm if you have '
                                                                                        'a logo or not')])
     employment_type = StringField('Employment type: ')
     industry = StringField('Industry: ')
@@ -19,7 +19,7 @@ class WorkForm(FlaskForm):
 
 class SignupForm(FlaskForm):
 
-    email = StringField('E-mail: ', validators=[DataRequired(message='Please enter a valid Email!')])
+    email = StringField('E-mail: ', validators=[DataRequired(message='Please enter a valid Email!')], render_kw={"placeholder": "Email"})
 
     username = StringField('Username: ', validators=[DataRequired(message='This is required'), Length(3, 25)])
     password_hash = PasswordField('Password: ', validators=[DataRequired(), Length(3, 30)])

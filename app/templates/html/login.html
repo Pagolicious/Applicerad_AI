@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-
-            <br/>
-            {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control") }}
-            <br/>
-            {{ form.password_hash.label(class="form-label") }}
-            {{ form.password_hash(class="form-control") }}
-            <br/>
-            {{ form.login_button(class="btn btn-secondary") }}
+{% extends 'html/base.html' %}
 
 
+{% block content %}
+    <div class="shadow p-3 mb-5 bg-body rounded">
 
-        </form>
+    <form method="POST">
+        {{ form.hidden_tag() }}
 
+        <br/>
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control") }}
+        <br/>
+        {{ form.password_hash.label(class="form-label") }}
+        {{ form.password_hash(class="form-control") }}
+        <br/>
+        {{ form.login_button(class="btn btn-secondary") }}
+    </form>
     </div>
-</body>
-</html>
+
+{% endblock %}
