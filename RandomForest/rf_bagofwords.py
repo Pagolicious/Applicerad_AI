@@ -7,8 +7,9 @@ import numpy as np
 
 df = pd.read_csv('./fake_jobs_dataset_v2.csv')
 
-
-df.head()
+fake = df.loc[df['fraudulent'] == 1]
+print(df.head())
+print(fake)
 
 
 df['company_profile'].head()
@@ -28,7 +29,7 @@ print(X)
 np.asarray(X)
 
 
-X_train, X_test, Y_train, Y_test = train_test_split(X,Y ,train_size=0.8)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8)
 
 
 print(X_train.shape, X_test.shape, Y_train.shape, Y_test.shape)
@@ -66,4 +67,8 @@ np.asarray(testing)
 
 
 result = forest.predict(testing)
+if result:
+    print('Fake')
+else:
+    print('Real')
 print(result)

@@ -1,0 +1,14 @@
+version: "3"
+
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27028:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: fakejobs
+    volumes:
+      - "./db_dump:/db_dump"
