@@ -17,9 +17,28 @@ class Job(Document):
         self.salary = salary
 
 
+class User(Document):
+    username = StringField(required=True)
+    email = StringField(required=True)
+    password = StringField(required=True)
+
+    meta = {
+        'collection': 'user'
+    }
+
+    def __init__(self, username, email, password, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.username = username
+        self.email = email
+        self.password = password
+
+
 def main():
     job = Job('Teacher', 50000)
     job.save()
+
+    user = User('JohanRymden', 'johan@rymden.com', 'funkardet')
+    user.save()
 
 
 if __name__ == '__main__':
