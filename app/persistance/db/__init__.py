@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 from abc import ABC
 
-client = None
-db = None
+client = MongoClient(f'mongodb://root:fakejobs@localhost:27028')
+db = client.jobs
 
 
 def init_db(app):

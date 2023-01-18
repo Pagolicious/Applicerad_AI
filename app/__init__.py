@@ -85,20 +85,24 @@ class User(db.Model, UserMixin):
 
 
 def create_app():
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-    app.config['SECRET_KEY'] = "very secret"
-
-    db.init_app(app)
+    _app = Flask(__name__)
+    # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    _app.config['SECRET_KEY'] = "very secret"
+    from app import settings
+    _app.config.from_pyfile('settings.py')
+    # db.init_app(app)
+    from app.persistance.db import init_db
+    init_db(_app)
 
     from.views import bp_user
-    app.register_blueprint(bp_user, url_prefix='/')
+    _app.register_blueprint(bp_user, url_prefix='/')
 
-    if not path.exists('Applicerad_AI/' + DB_NAME):
-        with app.app_context():
-            db.create_all()
-
-    return app
+    # if not path.exists('Applicerad_AI/' + DB_NAME):
+    #     with _app.app_context():
+    #         db.create_all()
+    from app.persistance.db import db
+    print(db, 'what is db')
+    return _app
 
 def initialize_extensions(app):
     login_manager.init_app(app)
