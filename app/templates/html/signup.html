@@ -2,16 +2,26 @@
 
 
 {% block content %}
-    {% for messeage in get_flashed_messages() %}
-        <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-        <div class="toast-body">
-            {{ messeage }}
-    </div>
-    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-</div>
-    {% endfor %}
+    {% with messages = get_flashed_messages(category_filter=["success"]) %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+   {% with messages = get_flashed_messages(category_filter=["error"]) %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="shadow p-3 mb-5 bg-body rounded">
 
     <form method="POST">
@@ -19,19 +29,35 @@
         <br/>
          {{ form.email.label(class="form-label") }}
          {{ form.email(class="form-control") }}
+
+        {% for error in form.email.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
          <br/>
          {{ form.username.label(class="form-label") }}
          {{ form.username(class="form-control") }}
+
+        {% for error in form.username.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
          <br/>
-         {{ form.password_hash.label(class="form-label") }}
-         {{ form.password_hash(class="form-control") }}
+         {{ form.password.label(class="form-label") }}
+         {{ form.password(class="form-control") }}
+
         <span id="passwordHelpInline" class="form-text">
             Must be 4-20 characters long.
         </span>
+        {% for error in form.password.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
         <br/>
          <br/>
          {{ form.repeat_pass.label(class="form-label") }}
          {{ form.repeat_pass(class="form-control") }}
+
+        {% for error in form.repeat_pass.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
          <br/>
          {{ form.create_user(class="btn btn-secondary") }}
     </form>

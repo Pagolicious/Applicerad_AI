@@ -1,3 +1,4 @@
+from flask_login import UserMixin
 from mongoengine import connect, Document, StringField, IntField
 
 connect('FirstDB', username='root', password='s3cr37', authentication_source='admin')
@@ -18,6 +19,7 @@ class Job(Document):
 
 
 class User(Document):
+    id = IntField(primary_key=True)
     username = StringField(required=True)
     email = StringField(required=True)
     password = StringField(required=True)
