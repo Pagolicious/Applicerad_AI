@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, current_app, flash, redirect, request
 from flask_login import login_user, login_required, logout_user, current_user
+from app.controller import job_controller
 
 from app.forms import WorkForm, SignupForm, LoginForm
 from .controller import user_controller
@@ -83,9 +84,11 @@ def upload():
         title = form.title.data
         location = form.location.data
         company_profile = form.company_profile.data
-        has_company_logo = form.has_company_logo.data
-        employment_type = form.employment_type
+        company_logo = form.has_company_logo.data
+        employment_type = form.employment_type.data
         industry = form.industry.data
+
+        job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo)
 
         flash("Posted Job Ad Successfully")
 
