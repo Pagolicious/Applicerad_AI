@@ -6,4 +6,4 @@ def create_job(job):
 
 
 def get_all_jobs():
-    return Job.all()
+    return Job.find().last_or_none()

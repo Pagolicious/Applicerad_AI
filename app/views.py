@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, url_for, current_app, flash, redirect, request
 from flask_login import login_user, login_required, logout_user, current_user
 from app.controller import job_controller
+from RandomForest import predict
 
 from app.forms import WorkForm, SignupForm, LoginForm
 from .controller import user_controller
@@ -39,6 +40,7 @@ def signup():
 
     return render_template("html/signup.html", username=username, form=form)
 
+
 @bp_user.route("/login/", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -76,6 +78,7 @@ def logout():
 
     return redirect(url_for("bp_user.index"))
 
+
 @bp_user.route('/upload/', methods=['GET', 'POST'])
 @login_required
 def upload():
@@ -91,5 +94,9 @@ def upload():
         job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo)
 
         flash("Posted Job Ad Successfully")
+        print("Predicting job")
+        print(job_controller.get_latest_job())
+        predict.prediction()
+        return redirect(url_for("bp_user.index"))
 
     return render_template("html/upload.html", form=form)
