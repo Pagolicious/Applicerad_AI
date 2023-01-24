@@ -1,0 +1,51 @@
+{% extends 'html/base.html' %}
+
+
+{% block content %}
+    {% for job in all_jobs %}
+        {% if job.title == job_title %}
+
+            <div class="card">
+  <div class="card-header">
+      <h5 class="card-title">{{ job.title }}</h5>
+  </div>
+  <div class="card-body">
+    <b class="card-title">Company Profile</b>
+    <p class="card-text">{{ job.company_profile }}</p>
+  </div>
+</div>
+            <br/>
+<div class="row">
+  <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="card">
+      <div class="card-body">
+        <b class="card-title">Required Experience</b>
+        <p class="card-text">{{ job.required_experience }}</p>
+          <b class="card-title">Education Experience</b>
+        <p class="card-text">{{ job.required_education }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <b class="card-title">Location: </b>
+          {{ job.location }}
+          <br/>
+          <br/>
+        <b class="card-text">Employment type: </b>
+          {{ job.employment_type }}
+          <br/>
+          <br/>
+        <b class="card-text">Salary range: </b>
+          {{ job.salary_range }}
+      </div>
+    </div>
+  </div>
+</div>
+
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+

@@ -23,6 +23,36 @@
         {% endif %}
     {% endwith %}
 
+    <div class="text-center mb-5">
+      <h3>Jobs opening</h3>
+      <p class="lead">Let’s find your dream job!</p>
+    </div>
+   {% for job in all_jobs %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row">
+          <div class="row flex-fill">
+            <div class="col-sm-5">
+              <h4 class="h5">{{ job.title }}</h4>
+              <span class="badge bg-secondary">{{ job.location }}</span> <span class="badge bg-success">{{ job.salary_range }}</span>
+            </div>
+            <div class="col-sm-4 py-2">
+              <span class="badge bg-secondary">{{ job.industry }}</span>
+              <span class="badge bg-secondary">{{ job.employment_type }}</span>
+            </div>
+            <div class="col-sm-3 text-lg-end">
+              <a href="{{ url_for('bp_user.view_info', title=job.title) }}" class="btn btn-primary">Info</a>
+                <span>
+                    <a href="#" class="btn btn-primary">Apply</a>
+                </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        {% endfor %}
+
 {% endblock %}
 
 

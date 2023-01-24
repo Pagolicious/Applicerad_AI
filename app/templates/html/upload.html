@@ -2,6 +2,27 @@
 
 
 {% block content %}
+
+    {% with messages = get_flashed_messages(category_filter=["success"]) %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+   {% with messages = get_flashed_messages(category_filter=["error"]) %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="shadow p-3 mb-5 bg-body rounded">
     <form class="row g-3" method="POST">
          {{ form.hidden_tag() }}
@@ -22,6 +43,18 @@
          {{ form.location.label(class="form-label") }}
          {{ form.location(class="form-control") }}
         </div>
+        <div class="col-md-6">
+         {{ form.salary_range.label(class="form-label") }}
+         {{ form.salary_range(class="form-control") }}
+         </div>
+        <div class="col-md-6">
+         {{ form.required_experience.label(class="form-label") }}
+         {{ form.required_experience(class="form-control") }}
+         </div>
+        <div class="col-md-6">
+         {{ form.required_education.label(class="form-label") }}
+         {{ form.required_education(class="form-control") }}
+         </div>
         <div class="col-md-6">
          {{ form.company_profile.label(class="form-label") }}
          {{ form.company_profile(class="form-control") }}

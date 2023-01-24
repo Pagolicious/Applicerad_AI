@@ -5,6 +5,7 @@ class Job(Document):
     collection = db.jobs
 
 
+
 class User(Document):
     collection = db.users
 
