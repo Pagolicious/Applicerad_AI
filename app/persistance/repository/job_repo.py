@@ -15,5 +15,3 @@ def get_all_jobs():
 def get_by_id(_id):
     return ResultList(Job(i) for i in Job.collection.find(dict(_id=_id))).first_or_none()
 
-
-

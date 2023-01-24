@@ -3,6 +3,7 @@ from http import HTTPStatus
 from flask import Blueprint, render_template, url_for, current_app, flash, redirect, request, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from app.controller import job_controller
+from RandomForest import predict
 
 from app.forms import WorkForm, SignupForm, LoginForm
 from .controller import user_controller
@@ -44,6 +45,7 @@ def signup():
             print('Username Already Exists')
 
     return render_template("html/signup.html", username=username, form=form)
+
 
 @bp_user.route("/login/", methods=['GET', 'POST'])
 def login():
@@ -100,7 +102,13 @@ def upload():
         job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo,
                                   salary_range, required_experience, required_education)
 
+
         flash("Posted Job Ad Successfully", "success")
+        print("Predicting job")
+        print(job_controller.get_latest_job())
+        predict.prediction()
+        return redirect(url_for("bp_user.index"))
+
 
     return render_template("html/upload.html", form=form)
 

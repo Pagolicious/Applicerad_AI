@@ -21,3 +21,7 @@ def create_job(title, industry, employment_type, location, company_profile, comp
 def get_by_job_id(_id):
     return job_repo.get_by_id(_id)
 
+
+def get_latest_job():
+    latest = job_repo.get_all_jobs()
+    return latest
