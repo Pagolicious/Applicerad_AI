@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, url_for, current_app, flash, redirect, request
+from http import HTTPStatus
+
+from flask import Blueprint, render_template, url_for, current_app, flash, redirect, request, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from app.controller import job_controller
 from RandomForest import predict
@@ -8,13 +10,17 @@ from .controller import user_controller
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from .persistance.models import Job
+from .persistance.repository import job_repo
+
 bp_user = Blueprint(name="bp_user", import_name=__name__)
 
 
-@bp_user.route('/home')
-@bp_user.route('/')
+@bp_user.route('/home', methods=['GET', 'POST'])
+@bp_user.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("html/index.html")
+    all_jobs = job_repo.get_all_jobs()
+    return render_template("html/index.html", all_jobs=all_jobs)
 
 
 @bp_user.route("/signup/", methods=['GET', 'POST'])
@@ -62,7 +68,6 @@ def login():
                 flash('Invalid Credentials', "error")
                 print('Invalid1')
 
-
         else:
             flash('Invalid Credentials', "error")
             print('Invalid2')
@@ -90,13 +95,28 @@ def upload():
         company_logo = form.has_company_logo.data
         employment_type = form.employment_type.data
         industry = form.industry.data
+        salary_range = form.salary_range.data
+        required_experience = form.required_experience.data
+        required_education = form.required_education.data
 
-        job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo)
+        job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo,
+                                  salary_range, required_experience, required_education)
 
-        flash("Posted Job Ad Successfully")
+
+        flash("Posted Job Ad Successfully", "success")
         print("Predicting job")
         print(job_controller.get_latest_job())
         predict.prediction()
         return redirect(url_for("bp_user.index"))
 
+
     return render_template("html/upload.html", form=form)
+
+
+@bp_user.route('/info/<title>', methods=['GET', 'POST'])
+def view_info(title):
+    # job = job_controller.get_by_job_id(_id)
+    all_jobs = job_repo.get_all_jobs()
+    if not title:
+        abort(HTTPStatus.NOT_FOUND, "This is not the page you are looking for.")
+    return render_template("html/info.html", job_title=title, all_jobs=all_jobs)

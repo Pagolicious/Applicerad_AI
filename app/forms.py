@@ -5,14 +5,16 @@ from wtforms.validators import Length, DataRequired, EqualTo, InputRequired, Ema
 
 class WorkForm(FlaskForm):
 
-    title = StringField('Title: ', validators=[DataRequired(message='Please enter a Title'), Length(4, 20)])
+    title = StringField('Title: ', validators=[DataRequired(message='Please enter a Title'), Length(4, 200)])
 
     location = StringField('Location: ')
     company_profile = TextAreaField('Company Profile: ')
-    has_company_logo = BooleanField('', validators=[DataRequired(message='Please confirm if you have '
-                                                                                       'a logo or not')])
+    has_company_logo = BooleanField('')
     employment_type = StringField('Employment type: ')
     industry = StringField('Industry: ')
+    salary_range = StringField('Salary Range: ', render_kw={"placeholder": "###kr - ###kr Hourly/Monthly/Yearly"})
+    required_experience = StringField('Required Experience ')
+    required_education = StringField('Required Education ')
 
     create_post = SubmitField('Upload')
 
