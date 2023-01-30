@@ -1,128 +1,138 @@
 import pandas as pd
 
 rfc = None
+df = None
 
 
 def main():
-       global rfc
-       df = pd.read_csv('C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/RandomForest/fake_jobs_dataset_v2.csv')
+    global rfc
+    global df
+    df = pd.read_csv('C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/RandomForest/fake_jobs_dataset_v2.csv')
 
 
-       df.head()
+    df.head()
 
 
-       df = df.assign(company_profile_flag=0)
+    print(df.columns)
 
 
-       print(df.columns)
+    df.info()
 
 
-       df.info()
+    df.describe()
 
 
-       df.describe()
+    print(df.shape)
 
 
-       print(df.shape)
+    df = df[['title', 'location', 'department', 'salary_range',
+             'company_profile', 'description', 'requirements', 'benefits',
+             'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
+             'required_experience', 'required_education', 'industry', 'function',
+             'fraudulent']]
 
 
-       df = df[['title', 'location', 'department', 'salary_range',
-              'company_profile', 'description', 'requirements', 'benefits',
-              'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
-              'required_experience', 'required_education', 'industry', 'function',
-              'fraudulent', 'company_profile_flag']]
+    df.isna().apply(pd.value_counts)
 
 
-       df.isna().apply(pd.value_counts)
+    df.isnull().sum()
 
 
-       df.isnull().sum()
+    df['fraudulent'].value_counts()
 
 
-       df['fraudulent'].value_counts()
+    fraud = df[df['fraudulent']== 1]
+    print(fraud.shape)
 
 
-       fraud = df[df['fraudulent']== 1]
-       print(fraud.shape)
+    not_fraud = df[df['fraudulent']== 0]
+    print(not_fraud.shape)
 
 
-       not_fraud = df[df['fraudulent']== 0]
-       print(not_fraud.shape)
+    fraud = fraud.sample(17014, replace=True)
 
 
-       fraud = fraud.sample(17014, replace=True)
+    print(fraud.shape, not_fraud.shape)
 
 
-       print(fraud.shape, not_fraud.shape)
+    df = fraud.append(not_fraud)
+    df.reset_index()
+
+    df = label_encoder(df)
 
 
-       df = fraud.append(not_fraud)
-       df.reset_index()
+    df = df.reset_index()
+    df.head()
 
 
-       from sklearn.preprocessing import LabelEncoder
+    from sklearn.model_selection import train_test_split
 
 
-       le = LabelEncoder()
-       df['title'] = le.fit_transform(df['title'])
-       df['location'] = le.fit_transform(df['location'])
-       df['department'] = le.fit_transform(df['department'])
-       df['salary_range'] = le.fit_transform(df['salary_range'])
-       df['company_profile'] = le.fit_transform(df['company_profile'])
-       df['description'] = le.fit_transform(df['description'])
-       df['requirements'] = le.fit_transform(df['requirements'])
-       df['benefits'] = le.fit_transform(df['benefits'])
-       df['employment_type'] = le.fit_transform(df['employment_type'])
-       df['required_experience'] = le.fit_transform(df['required_experience'])
-       df['required_education'] = le.fit_transform(df['required_education'])
-       df['industry'] = le.fit_transform(df['industry'])
-       df['function'] = le.fit_transform(df['function'])
+    X = df[['title', 'location', 'department', 'salary_range',
+            'company_profile', 'description', 'requirements', 'benefits',
+            'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
+            'required_experience', 'required_education', 'industry', 'function']].values
+    Y = df[['fraudulent']].values
 
 
-       df = df.reset_index()
-       df.head()
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y)
 
 
-       from sklearn.model_selection import train_test_split
+    print(X_train.shape, X_test.shape, Y_train.shape, Y_test.shape)
 
 
-       X = df[['index', 'title', 'location', 'department', 'salary_range',
-              'company_profile', 'description', 'requirements', 'benefits',
-              'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
-              'required_experience', 'required_education', 'industry', 'function']].values
-       Y = df[['fraudulent']].values
+    from sklearn.metrics import accuracy_score
 
 
-       X_train, X_test, Y_train, Y_test = train_test_split(X, Y)
+    from sklearn.ensemble import RandomForestClassifier
 
 
-       print(X_train.shape, X_test.shape, Y_train.shape, Y_test.shape)
+    rfc = RandomForestClassifier(n_estimators=4)
 
 
-       from sklearn.metrics import accuracy_score
+    rfc.fit(X_train, Y_train)
 
 
-       from sklearn.ensemble import RandomForestClassifier
+    Y_pred = rfc.predict(X_test)
 
 
-       rfc = RandomForestClassifier(n_estimators=4)
+    Y_test = Y_test.flatten()
+    Y_pred = Y_pred.flatten()
 
 
-       rfc.fit(X_train, Y_train)
+    df_rfc = pd.DataFrame({'Y_test': Y_test , 'Y_pred': Y_pred})
+    print(df_rfc)
 
 
-       Y_pred = rfc.predict(X_test)
+    print('Random Forest:', accuracy_score(Y_pred, Y_test))
 
 
-       Y_test = Y_test.flatten()
-       Y_pred = Y_pred.flatten()
+    print(rfc.predict([[10592,38,1337,874,1709,11720,5824,6205,0,0,0,3,7,13,131,37]]))
 
 
-       df_rfc = pd.DataFrame({'Y_test': Y_test , 'Y_pred': Y_pred})
-       print(df_rfc)
+def label_encoder(df):
+    from sklearn.preprocessing import LabelEncoder
+
+    le = LabelEncoder()
+    df['title'] = le.fit_transform(df['title'])
+    df['location'] = le.fit_transform(df['location'])
+    df['department'] = le.fit_transform(df['department'])
+    df['salary_range'] = le.fit_transform(df['salary_range'])
+    df['company_profile'] = le.fit_transform(df['company_profile'])
+    df['description'] = le.fit_transform(df['description'])
+    df['requirements'] = le.fit_transform(df['requirements'])
+    df['benefits'] = le.fit_transform(df['benefits'])
+    df['telecommuting'] = le.fit_transform(df['telecommuting'])
+    df['has_company_logo'] = le.fit_transform(df['has_company_logo'])
+    df['has_questions'] = le.fit_transform(df['has_questions'])
+    df['employment_type'] = le.fit_transform(df['employment_type'])
+    df['required_experience'] = le.fit_transform(df['required_experience'])
+    df['required_education'] = le.fit_transform(df['required_education'])
+    df['industry'] = le.fit_transform(df['industry'])
+    df['function'] = le.fit_transform(df['function'])
+
+    return df
 
 
-       print('Random Forest:', accuracy_score(Y_pred, Y_test))
-
-
-       print(rfc.predict([[17612,10592,38,1337,874,1709,11720,5824,6205,0,0,0,3,7,13,131,37]]))
+if __name__ == '__main__':
+    main()

@@ -99,14 +99,13 @@ def upload():
         required_experience = form.required_experience.data
         required_education = form.required_education.data
 
-        job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo,
-                                  salary_range, required_experience, required_education)
-
-
-        flash("Posted Job Ad Successfully", "success")
         print("Predicting job")
+        prediction = predict.prediction(title, industry, employment_type, location, company_profile, company_logo,
+                                        salary_range, required_experience, required_education)
+        job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo,
+                                  salary_range, required_experience, required_education, prediction)
+        flash("Posted Job Ad Successfully", "success")
         print(job_controller.get_latest_job())
-        predict.prediction()
         return redirect(url_for("bp_user.index"))
 
 
