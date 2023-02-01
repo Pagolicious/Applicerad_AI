@@ -21,7 +21,7 @@ collection = Job.collection
 @bp_user.route('/', methods=['GET', 'POST'])
 def index():
     all_jobs = job_repo.get_all_jobs() and \
-               collection.find({'fradulent': {'$lt': 1}})
+               collection.find({'fraudulent': {'$lt': 1}})
 
     return render_template("html/index.html", all_jobs=all_jobs)
 
