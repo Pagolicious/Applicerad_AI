@@ -14,12 +14,15 @@ from .persistance.models import Job
 from .persistance.repository import job_repo
 
 bp_user = Blueprint(name="bp_user", import_name=__name__)
+collection = Job.collection
 
 
 @bp_user.route('/home', methods=['GET', 'POST'])
 @bp_user.route('/', methods=['GET', 'POST'])
 def index():
-    all_jobs = job_repo.get_all_jobs()
+    all_jobs = job_repo.get_all_jobs() and \
+               collection.find({'fradulent': {'$lt': 1}})
+
     return render_template("html/index.html", all_jobs=all_jobs)
 
 

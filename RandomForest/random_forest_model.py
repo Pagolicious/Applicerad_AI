@@ -7,23 +7,17 @@ df = None
 def main():
     global rfc
     global df
-    df = pd.read_csv('C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/RandomForest/fake_jobs_dataset_v2.csv')
-
+    df = pd.read_csv('C:/Users/vrban/Downloads/fake_jobs2/fake_jobs_dataset_v2.csv')
 
     df.head()
 
-
     print(df.columns)
-
 
     df.info()
 
-
     df.describe()
 
-
     print(df.shape)
-
 
     df = df[['title', 'location', 'department', 'salary_range',
              'company_profile', 'description', 'requirements', 'benefits',
@@ -31,42 +25,31 @@ def main():
              'required_experience', 'required_education', 'industry', 'function',
              'fraudulent']]
 
-
     df.isna().apply(pd.value_counts)
-
 
     df.isnull().sum()
 
-
     df['fraudulent'].value_counts()
 
-
-    fraud = df[df['fraudulent']== 1]
+    fraud = df[df['fraudulent'] == 1]
     print(fraud.shape)
 
-
-    not_fraud = df[df['fraudulent']== 0]
+    not_fraud = df[df['fraudulent'] == 0]
     print(not_fraud.shape)
-
 
     fraud = fraud.sample(17014, replace=True)
 
-
     print(fraud.shape, not_fraud.shape)
-
 
     df = fraud.append(not_fraud)
     df.reset_index()
 
     df = label_encoder(df)
 
-
     df = df.reset_index()
     df.head()
 
-
     from sklearn.model_selection import train_test_split
-
 
     X = df[['title', 'location', 'department', 'salary_range',
             'company_profile', 'description', 'requirements', 'benefits',
@@ -74,40 +57,29 @@ def main():
             'required_experience', 'required_education', 'industry', 'function']].values
     Y = df[['fraudulent']].values
 
-
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y)
-
 
     print(X_train.shape, X_test.shape, Y_train.shape, Y_test.shape)
 
-
     from sklearn.metrics import accuracy_score
-
 
     from sklearn.ensemble import RandomForestClassifier
 
-
     rfc = RandomForestClassifier(n_estimators=4)
-
 
     rfc.fit(X_train, Y_train)
 
-
     Y_pred = rfc.predict(X_test)
-
 
     Y_test = Y_test.flatten()
     Y_pred = Y_pred.flatten()
 
-
-    df_rfc = pd.DataFrame({'Y_test': Y_test , 'Y_pred': Y_pred})
+    df_rfc = pd.DataFrame({'Y_test': Y_test, 'Y_pred': Y_pred})
     print(df_rfc)
-
 
     print('Random Forest:', accuracy_score(Y_pred, Y_test))
 
-
-    print(rfc.predict([[10592,38,1337,874,1709,11720,5824,6205,0,0,0,3,7,13,131,37]]))
+    print(rfc.predict([[10592, 38, 1337, 874, 1709, 11720, 5824, 6205, 0, 0, 0, 3, 7, 13, 131, 37]]))
 
 
 def label_encoder(df):
