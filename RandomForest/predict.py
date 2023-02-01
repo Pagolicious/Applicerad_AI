@@ -5,8 +5,7 @@ import os
 
 
 def add_to_csv(new_data):
-    original_file = 'C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/RandomForest/fake_jobs_dataset_v2.csv'
-
+    original_file = 'C:/Users/vrban/Downloads/fake_jobs2/fake_jobs_dataset_v2.csv'
     # New CSV file
     new_file = 'new_job.csv'
 
@@ -43,7 +42,7 @@ def prediction(a=None,b=None,c=None,d=None,e=None,f=None,g=None,h=None,i=None,j=
     }
 
     add_to_csv(predict)
-    df_ = pd.read_csv('C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/new_job.csv')
+    df_ = pd.read_csv('D:/Yrkeshög skola Python utvecklare inom AI/Applicerad_AI/new_job.csv')
     df_ = df_[['title', 'location', 'department', 'salary_range', 'company_profile', 'description', 'requirements',
                'benefits', 'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
                'required_experience', 'required_education', 'industry', 'function']]
@@ -57,7 +56,7 @@ def prediction(a=None,b=None,c=None,d=None,e=None,f=None,g=None,h=None,i=None,j=
     print("Working")
     result = str(result)
     print(result)
-    file_path = 'C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/new_job.csv'
+    file_path = 'D:/Yrkeshög skola Python utvecklare inom AI/Applicerad_AI/new_job.csv'
     os.remove(file_path)
     if result == "[0]":
         return 0
