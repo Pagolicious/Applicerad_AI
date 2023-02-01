@@ -1,19 +1,27 @@
 from app.persistance.repository import job_repo
 
 
-def create_job(title, industry, employment_type, location, company_profile, company_logo, salary_range,
-               required_experience, required_education, fraudulent=None):
+def create_job(title, location, department, salary_range, company_profile, description, requirements, benefits,
+               telecommuting, has_company_logo, has_questions, employment_type, required_experience, required_education,
+               industry, function, fraudulent=None):
     job = dict(
         title=title,
-        industry=industry,
-        employment_type=employment_type,
         location=location,
-        company_profile=company_profile,
-        company_logo=company_logo,
+        department=department,
         salary_range=salary_range,
+        company_profile=company_profile,
+        description=description,
+        requirements=requirements,
+        benefits=benefits,
+        telecommuting=telecommuting,
+        has_company_logo=has_company_logo,
+        has_questions=has_questions,
+        employment_type=employment_type,
         required_experience=required_experience,
         required_education=required_education,
-        fradulent=fraudulent
+        industry=industry,
+        function=function,
+        fraudulent=fraudulent
     )
 
     job_repo.create_job(job)

@@ -7,22 +7,22 @@ df = None
 def main():
     global rfc
     global df
-    df = pd.read_csv('C:/Users/Oscar/Desktop/applicerad_ai/grupp_projekt/RandomForest/fake_jobs_dataset_v2.csv')
+    df = pd.read_csv('RandomForest/fake_jobs_dataset_v2.csv')
 
 
-    df.head()
+    # df.head()
 
 
-    print(df.columns)
+    # print(df.columns)
 
 
-    df.info()
+    # df.info()
 
 
     df.describe()
 
 
-    print(df.shape)
+    # print(df.shape)
 
 
     df = df[['title', 'location', 'department', 'salary_range',
@@ -42,17 +42,17 @@ def main():
 
 
     fraud = df[df['fraudulent']== 1]
-    print(fraud.shape)
+    # print(fraud.shape)
 
 
     not_fraud = df[df['fraudulent']== 0]
-    print(not_fraud.shape)
+    # print(not_fraud.shape)
 
 
     fraud = fraud.sample(17014, replace=True)
 
 
-    print(fraud.shape, not_fraud.shape)
+    # print(fraud.shape, not_fraud.shape)
 
 
     df = fraud.append(not_fraud)
@@ -78,7 +78,7 @@ def main():
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y)
 
 
-    print(X_train.shape, X_test.shape, Y_train.shape, Y_test.shape)
+    # print(X_train.shape, X_test.shape, Y_train.shape, Y_test.shape)
 
 
     from sklearn.metrics import accuracy_score
@@ -101,13 +101,13 @@ def main():
 
 
     df_rfc = pd.DataFrame({'Y_test': Y_test , 'Y_pred': Y_pred})
-    print(df_rfc)
+    # print(df_rfc)
 
 
-    print('Random Forest:', accuracy_score(Y_pred, Y_test))
+    # print('Random Forest:', accuracy_score(Y_pred, Y_test))
 
 
-    print(rfc.predict([[10592,38,1337,874,1709,11720,5824,6205,0,0,0,3,7,13,131,37]]))
+    # print(rfc.predict([[10592,38,1337,874,1709,11720,5824,6205,0,0,0,3,7,13,131,37]]))
 
 
 def label_encoder(df):

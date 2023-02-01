@@ -91,19 +91,28 @@ def upload():
     if form.validate_on_submit():
         title = form.title.data
         location = form.location.data
-        company_profile = form.company_profile.data
-        company_logo = form.has_company_logo.data
-        employment_type = form.employment_type.data
-        industry = form.industry.data
+        department = None
         salary_range = form.salary_range.data
+        company_profile = form.company_profile.data
+        description = None
+        requirements = None
+        benefits = None
+        telecommuting = None
+        has_company_logo = form.has_company_logo.data
+        has_questions = None
+        employment_type = form.employment_type.data
         required_experience = form.required_experience.data
         required_education = form.required_education.data
+        industry = form.industry.data
+        function = None
 
         print("Predicting job")
-        prediction = predict.prediction(title, industry, employment_type, location, company_profile, company_logo,
-                                        salary_range, required_experience, required_education)
-        job_controller.create_job(title, industry, employment_type, location, company_profile, company_logo,
-                                  salary_range, required_experience, required_education, prediction)
+        fraudulent = predict.prediction(title, location, department, salary_range, company_profile, description,
+                                        requirements, benefits, telecommuting, has_company_logo, has_questions,
+                                        employment_type, required_experience, required_education, industry, function,)
+        job_controller.create_job(title, location, department, salary_range, company_profile, description, requirements,
+                                  benefits, telecommuting, has_company_logo, has_questions, employment_type,
+                                  required_experience, required_education, industry, function, fraudulent)
         flash("Posted Job Ad Successfully", "success")
         print(job_controller.get_latest_job())
         return redirect(url_for("bp_user.index"))
