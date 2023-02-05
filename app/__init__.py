@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_login import UserMixin, LoginManager
+from flask_ckeditor import CKEditor
 
 # from app.controller import user_controller
 
 login_manager = LoginManager()
+
 
 def create_app():
     _app = Flask(__name__)
@@ -17,6 +19,7 @@ def create_app():
     # initialize_extensions(_app)
     login_manager = LoginManager()
     login_manager.init_app(_app)
+
 
     @login_manager.user_loader
     def load_user(username):

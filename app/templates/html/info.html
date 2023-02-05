@@ -3,47 +3,104 @@
 
 {% block content %}
     {% for job in all_jobs %}
-        {% if job.title == job_title %}
-
+        {% if job._id == job_id %}
             <div class="card">
-  <div class="card-header">
-      <h5 class="card-title">{{ job.title }}</h5>
-  </div>
-  <div class="card-body">
-    <b class="card-title">Company Profile</b>
-    <p class="card-text">{{ job.company_profile }}</p>
-  </div>
-</div>
+                <div class="card-header">
+                    <h5 class="card-title">{{ job.title }}</h5>
+                </div>
+                <div class="card-body">
+                    <b class="card-title">Company Profile</b>
+                    <p class="card-text">{{ job.company_profile }}</p>
+                </div>
+                {% if not job.description == "" %}
+                    <div class="card-body">
+                        <b class="card-title">Description</b>
+                        <p class="card-text">{{ job.description }}</p>
+                    </div>
+                {% endif %}
+            </div>
             <br/>
-<div class="row">
-  <div class="col-sm-6 mb-3 mb-sm-0">
-    <div class="card">
-      <div class="card-body">
-        <b class="card-title">Required Experience</b>
-        <p class="card-text">{{ job.required_experience }}</p>
-          <b class="card-title">Education Experience</b>
-        <p class="card-text">{{ job.required_education }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <b class="card-title">Location: </b>
-          {{ job.location }}
-          <br/>
-          <br/>
-        <b class="card-text">Employment type: </b>
-          {{ job.employment_type }}
-          <br/>
-          <br/>
-        <b class="card-text">Salary range: </b>
-          {{ job.salary_range }}
-      </div>
-    </div>
-  </div>
-</div>
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <b class="card-title">Required Experience</b>
+                            <p class="card-text">{{ job.required_experience }}</p>
+                            <b class="card-title">Education Experience</b>
+                            <p class="card-text">{{ job.required_education }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <b class="card-title">Location: </b>
+                                {{ job.location }}
+                            <br/>
+                            <br/>
+                            <b class="card-text">Employment type: </b>
+                                {{ job.employment_type }}
+                            <br/>
+                            <br/>
+                            <b class="card-text">Salary range: </b>
+                                {{ job.salary_range }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if not job.requirements == "" %}
+                                <b class="card-title">Requirements</b>
+                                <p class="card-text">{{ job.requirements }}</p>
+                            {% endif %}
+                            {% if not job.benefits == "" %}
+                                <b class="card-title">Benefits</b>
+                                <p class="card-text">{{ job.benefits }}</p>
+                            {% endif %}
+                            {% if not job.has_questions == "" %}
+                                <b class="card-title">Questions</b>
+                                <p class="card-text">{{ job.has_questions }}</p>
+                            {% endif %}
 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if not job.department == "" %}
+                                <b class="card-title">Department: </b>
+                                    {{ job.department }}
+                            <br/>
+                            <br/>
+                            {% endif %}
+                            {% if not job.telecommuting == "" %}
+                                <b class="card-text">Telecommuting: </b>
+                                    {{ job.telecommuting }}
+                            <br/>
+                            <br/>
+                            {% endif %}
+                            {% if not job.function == "" %}
+                                <b class="card-text">Function: </b>
+                                    {{ job.function }}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+                <a href="{{ url_for('bp_user.index')}}" class="btn btn-secondary">Back</a>
+            {% if current_user.username == job.created_by %}
+                <a href="{{ url_for('bp_user.update', _id=job._id) }}" class="btn btn-primary">Update</a>
+                <a href="{{ url_for('bp_user.delete', _id=job._id) }}" class="btn btn-danger" style="float: right;">Delete</a>
+            {% else %}
+                <a href="#" class="btn btn-success">Apply</a>
+            {% endif %}
         {% endif %}
     {% endfor %}
 {% endblock %}

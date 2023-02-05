@@ -1,10 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, TextAreaField
 from wtforms.validators import Length, DataRequired, EqualTo, InputRequired, Email
+from wtforms.widgets import TextArea
+
+from app.controller import job_controller
 
 
 class WorkForm(FlaskForm):
-
     title = StringField('Title: ', validators=[DataRequired(message='Please enter a Title'), Length(4, 200)])
 
     location = StringField('Location: ')
@@ -12,11 +14,18 @@ class WorkForm(FlaskForm):
     has_company_logo = BooleanField('')
     employment_type = StringField('Employment type: ')
     industry = StringField('Industry: ')
-    salary_range = StringField('Salary Range: ', render_kw={"placeholder": "###kr - ###kr Hourly/Monthly/Yearly"})
-    required_experience = StringField('Required Experience ')
-    required_education = StringField('Required Education ')
+    salary_range = StringField('Salary Range: ', render_kw={"placeholder": "### - ### Hourly/Monthly/Yearly"})
+    required_experience = StringField('Required Experience: ')
+    required_education = StringField('Required Education: ')
+    department = StringField('Department: ')
+    description = TextAreaField('Description: ')
+    requirements = StringField('Requirements: ')
+    benefits = StringField('Benefits: ')
+    telecommuting = StringField('Telecommuting: ')
+    has_questions = StringField('Questions: ')
+    function = StringField('Function: ')
 
-    create_post = SubmitField('Upload')
+    submit_post = SubmitField('Submit')
 
 
 class SignupForm(FlaskForm):
@@ -38,3 +47,25 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password: ', validators=[InputRequired()])
 
     login_button = SubmitField('Login')
+
+
+# class UpdateForm(FlaskForm):
+#
+#     title = StringField('Title: ', validators=[DataRequired(message='Please enter a Title'), Length(4, 200)])
+#
+#     location = StringField('Location: ')
+#     company_profile = TextAreaField('Company Profile: ')
+#     has_company_logo = BooleanField('')
+#     employment_type = StringField('Employment type: ')
+#     industry = StringField('Industry: ')
+#     salary_range = StringField('Salary Range: ', render_kw={"placeholder": "### - ### Hourly/Monthly/Yearly"})
+#     required_experience = StringField('Required Experience ')
+#     required_education = StringField('Required Education ')
+#     department = StringField('Department ')
+#     description = TextAreaField('Description ')
+#     requirements = StringField('Requirements ')
+#     benefits = StringField('Benefits ')
+#     telecommuting = StringField('Telecommuting ')
+#     has_questions = StringField('Questions ')
+#
+#     update_post = SubmitField('Update')
