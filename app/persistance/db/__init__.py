@@ -50,8 +50,15 @@ class Document(dict, ABC):
         else:
             return self.collection.replace_one({'_id': self._id}, self.__dict__)
 
+    def update_with(self, new_values: dict) -> None:
+        self.__dict__.update(new_values)
+        self.collection.replace_one({"_id": self._id}, self.__dict__)
+
     def delete_field(self, field):
         self.collection.update_one({'_id': self._id}, {"$unset": {field: ""}})
+
+    def delete(self) -> None:
+        self.collection.delete_one({"_id": self._id})
 
     @classmethod
     def insert_many(cls, items):
@@ -67,5 +74,5 @@ class Document(dict, ABC):
         return ResultList(cls(item) for item in cls.collection.find(kwargs))
 
     @classmethod
-    def delete(cls, **kwargs):
+    def delete_more(cls, **kwargs):
         cls.collection.delete_many(kwargs)
