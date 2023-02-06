@@ -23,81 +23,85 @@
         {% endif %}
     {% endwith %}
 
-    <div class="shadow p-3 mb-5 bg-body rounded">
-    <form class="row g-3" method="POST">
-         {{ form.hidden_tag() }}
-         <div class="col-12">
+{% for job in all_jobs %}
+    {% if job._id == job_id %}
+        <div class="shadow p-3 mb-5 bg-body rounded">
+        <form class="row g-3" action="/update/{{ job._id }}" method="POST">
+             {{ form.hidden_tag() }}
+             <div class="col-12">
          {{ form.title.label(class="form-label") }}
-         {{ form.title(class="form-control") }}
+         {{ form.title(class="form-control", value=job.title) }}
          </div>
          <div class="col-md-6">
          {{ form.industry.label(class="form-label") }}
-         {{ form.industry(class="form-control") }}
+         {{ form.industry(class="form-control", value=job.industry) }}
          </div>
 
         <div class="col-md-6">
          {{ form.employment_type.label(class="form-label") }}
-         {{ form.employment_type(class="form-control") }}
+         {{ form.employment_type(class="form-control", value=job.employment_type) }}
         </div>
         <div class="col-md-6">
          {{ form.location.label(class="form-label") }}
-         {{ form.location(class="form-control") }}
+         {{ form.location(class="form-control", value=job.location) }}
         </div>
         <div class="col-md-6">
          {{ form.salary_range.label(class="form-label") }}
-         {{ form.salary_range(class="form-control") }}
+         {{ form.salary_range(class="form-control", value=job.salary_range) }}
          </div>
         <div class="col-md-6">
          {{ form.required_experience.label(class="form-label") }}
-         {{ form.required_experience(class="form-control") }}
+         {{ form.required_experience(class="form-control", value=job.required_experience) }}
          </div>
         <div class="col-md-6">
          {{ form.required_education.label(class="form-label") }}
-         {{ form.required_education(class="form-control") }}
+         {{ form.required_education(class="form-control", value=job.required_education) }}
          </div>
         <div class="col-md-6">
          {{ form.requirements.label(class="form-label") }}
-         {{ form.requirements(class="form-control") }}
+         {{ form.requirements(class="form-control", value=job.requirements) }}
          </div>
         <div class="col-md-6">
          {{ form.department.label(class="form-label") }}
-         {{ form.department(class="form-control") }}
+         {{ form.department(class="form-control", value=job.department) }}
          </div>
         <div class="col-md-6">
          {{ form.benefits.label(class="form-label") }}
-         {{ form.benefits(class="form-control") }}
+         {{ form.benefits(class="form-control", value=job.benefits) }}
          </div>
         <div class="col-md-6">
          {{ form.telecommuting.label(class="form-label") }}
-         {{ form.telecommuting(class="form-control") }}
+         {{ form.telecommuting(class="form-control", value=job.telecommuting) }}
          </div>
         <div class="col-md-6">
          {{ form.has_questions.label(class="form-label") }}
-         {{ form.has_questions(class="form-control") }}
+         {{ form.has_questions(class="form-control", value=job.has_questions) }}
          </div>
         <div class="col-md-6">
          {{ form.function.label(class="form-label") }}
-         {{ form.function(class="form-control") }}
+         {{ form.function(class="form-control", value=job.function) }}
          </div>
         <div class="col-md-6">
          {{ form.company_profile.label(class="form-label") }}
-         {{ form.company_profile(class="form-control") }}
+         {{ form.company_profile(class="form-control", value=job.company_profile) }}
          </div>
         <div class="col-md-6">
          {{ form.description.label(class="form-label") }}
-         {{ form.description(class="form-control") }}
+         {{ form.description(class="form-control", value=job.description) }}
          </div>
-        <div class="col-12">
-            <div class="form-check">
-                {{ form.has_company_logo.label(class="form-check-label", for="gridCheck") }}
-                {{ form.has_company_logo(class="form-check-input", type="checkbox") }}
-                Company Logo
+            <div class="col-12">
+                <div class="form-check">
+                    {{ form.has_company_logo.label(class="form-check-label", for="gridCheck") }}
+                    {{ form.has_company_logo(class="form-check-input", type="checkbox", value=job.company_logo, checked=job.company_logo) }}
+                    Company Logo
+                </div>
             </div>
+            <div class="col-12">
+                <a href="{{ url_for('bp_user.view_info', _id=job._id)}}" class="btn btn-secondary">Back</a>
+                {{ form.submit_post(class="btn btn-primary") }}
+            </div>
+        </form>
         </div>
-        <div class="col-12">
-            {{ form.submit_post(class="btn btn-primary") }}
-        </div>
-    </form>
-    </div>
-
+    {% endif %}
+{% endfor %}
 {% endblock %}

@@ -4,29 +4,30 @@
 {% block content %}
 
 {% with messages = get_flashed_messages(category_filter=["success"]) %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-success" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
-   {% with messages = get_flashed_messages(category_filter=["error"]) %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-danger" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+{% with messages = get_flashed_messages(category_filter=["error"]) %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
     <div class="text-center mb-5">
-      <h3>Jobs opening</h3>
+      <h3>Job Openings</h3>
       <p class="lead">Let’s find your dream job!</p>
     </div>
+
    {% for job in all_jobs %}
     <div class="card mb-3">
       <div class="card-body">
@@ -41,17 +42,16 @@
               <span class="badge bg-secondary">{{ job.employment_type }}</span>
             </div>
             <div class="col-sm-3 text-lg-end">
-              <a href="{{ url_for('bp_user.view_info', title=job.title) }}" class="btn btn-primary">Info</a>
+              <a href="{{ url_for('bp_user.view_info', _id=job._id) }}" class="btn btn-primary">Info</a>
                 <span>
-                    <a href="#" class="btn btn-primary">Apply</a>
+                    <a href="#" class="btn btn-success">Apply</a>
                 </span>
-
             </div>
           </div>
         </div>
       </div>
     </div>
-        {% endfor %}
+   {% endfor %}
 
 {% endblock %}
 
