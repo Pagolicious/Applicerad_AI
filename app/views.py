@@ -116,7 +116,8 @@ def upload():
         job_controller.create_job(title, location, department, salary_range, company_profile, description, requirements,
                                   benefits, telecommuting, has_company_logo, has_questions, employment_type,
                                   required_experience, required_education, industry, function, fraudulent)
-        flash("Posted Job Ad Successfully", "success")
+        if fraudulent == 0:
+            flash("Posted Job Ad Successfully", "success")
         print(job_controller.get_latest_job())
         return redirect(url_for("bp_user.index"))
 

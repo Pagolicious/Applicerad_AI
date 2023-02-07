@@ -68,14 +68,6 @@
          {{ form.benefits(class="form-control") }}
          </div>
         <div class="col-md-6">
-         {{ form.telecommuting.label(class="form-label") }}
-         {{ form.telecommuting(class="form-control") }}
-         </div>
-        <div class="col-md-6">
-         {{ form.has_questions.label(class="form-label") }}
-         {{ form.has_questions(class="form-control") }}
-         </div>
-        <div class="col-md-6">
          {{ form.function.label(class="form-label") }}
          {{ form.function(class="form-control") }}
          </div>
@@ -92,6 +84,16 @@
                 {{ form.has_company_logo.label(class="form-check-label", for="gridCheck") }}
                 {{ form.has_company_logo(class="form-check-input", type="checkbox") }}
                 Company Logo
+            </div>
+            <div class="form-check">
+                {{ form.telecommuting.label(class="form-check-label", for="gridCheck") }}
+                {{ form.telecommuting(class="form-check-input", type="checkbox") }}
+                Telecommuting
+            </div>
+            <div class="form-check">
+                {{ form.has_questions.label(class="form-check-label", for="gridCheck") }}
+                {{ form.has_questions(class="form-check-input", type="checkbox") }}
+                Questions
             </div>
         </div>
         <div class="col-12">
