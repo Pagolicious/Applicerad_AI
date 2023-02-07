@@ -61,11 +61,6 @@
                                 <b class="card-title">Benefits</b>
                                 <p class="card-text">{{ job.benefits }}</p>
                             {% endif %}
-                            {% if not job.has_questions == "" %}
-                                <b class="card-title">Questions</b>
-                                <p class="card-text">{{ job.has_questions }}</p>
-                            {% endif %}
-
                         </div>
                     </div>
                 </div>
@@ -75,12 +70,6 @@
                             {% if not job.department == "" %}
                                 <b class="card-title">Department: </b>
                                     {{ job.department }}
-                            <br/>
-                            <br/>
-                            {% endif %}
-                            {% if not job.telecommuting == "" %}
-                                <b class="card-text">Telecommuting: </b>
-                                    {{ job.telecommuting }}
                             <br/>
                             <br/>
                             {% endif %}

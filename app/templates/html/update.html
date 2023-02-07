@@ -95,6 +95,16 @@
                     {{ form.has_company_logo(class="form-check-input", type="checkbox", value=job.company_logo, checked=job.company_logo) }}
                     Company Logo
                 </div>
+                <div class="form-check">
+                {{ form.telecommuting.label(class="form-check-label", for="gridCheck") }}
+                {{ form.telecommuting(class="form-check-input", type="checkbox") }}
+                Telecommuting
+            </div>
+            <div class="form-check">
+                {{ form.has_questions.label(class="form-check-label", for="gridCheck") }}
+                {{ form.has_questions(class="form-check-input", type="checkbox") }}
+                Questions
+            </div>
             </div>
             <div class="col-12">
                 <a href="{{ url_for('bp_user.view_info', _id=job._id)}}" class="btn btn-secondary">Back</a>
