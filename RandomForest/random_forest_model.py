@@ -68,9 +68,12 @@ def main():
     from sklearn.model_selection import train_test_split
 
 
-    X = df[['title', 'location', 'department', 'salary_range',
-            'company_profile', 'description', 'requirements', 'benefits',
-            'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
+    # X = df[['title', 'location', 'department', 'salary_range',
+    #         'company_profile', 'description', 'requirements', 'benefits',
+    #         'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
+    #         'required_experience', 'required_education', 'industry', 'function']].values
+    X = df[['title', 'location', 'department', 'company_profile', 'description', 'requirements', 'benefits',
+            'telecommuting', 'has_company_logo', 'employment_type',
             'required_experience', 'required_education', 'industry', 'function']].values
     Y = df[['fraudulent']].values
 
@@ -114,14 +117,14 @@ def label_encoder(df):
     df['title'] = le.fit_transform(df['title'])
     df['location'] = le.fit_transform(df['location'])
     df['department'] = le.fit_transform(df['department'])
-    df['salary_range'] = le.fit_transform(df['salary_range'])
+    # df['salary_range'] = le.fit_transform(df['salary_range'])
     df['company_profile'] = le.fit_transform(df['company_profile'])
     df['description'] = le.fit_transform(df['description'])
     df['requirements'] = le.fit_transform(df['requirements'])
     df['benefits'] = le.fit_transform(df['benefits'])
     df['telecommuting'] = le.fit_transform(df['telecommuting'])
     df['has_company_logo'] = le.fit_transform(df['has_company_logo'])
-    df['has_questions'] = le.fit_transform(df['has_questions'])
+    # df['has_questions'] = le.fit_transform(df['has_questions'])
     df['employment_type'] = le.fit_transform(df['employment_type'])
     df['required_experience'] = le.fit_transform(df['required_experience'])
     df['required_education'] = le.fit_transform(df['required_education'])

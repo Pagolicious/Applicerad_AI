@@ -109,6 +109,19 @@ def upload():
         industry = form.industry.data
         function = form.function.data
 
+        if telecommuting:
+            telecommuting = 1
+        else:
+            telecommuting = 0
+        if has_company_logo:
+            has_company_logo = 1
+        else:
+            has_company_logo = 0
+        if has_questions:
+            has_questions = 1
+        else:
+            has_questions = 0
+
         print("Predicting job")
         fraudulent = predict.prediction(title, location, department, salary_range, company_profile, description,
                                         requirements, benefits, telecommuting, has_company_logo, has_questions,

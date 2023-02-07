@@ -28,14 +28,21 @@ def prediction(a=None,b=None,c=None,d=None,e=None,f=None,g=None,h=None,i=None,j=
     language = [a,c,e,f,g,h,l,m,n,o,p]
     language_not_none = []
     for lang in language:
-        if lang is None:
-            print('None')
+        if lang == '':
+            print('No input')
         else:
             language_not_none.append(lang)
             print('added to language check')
     print(language_not_none)
     if language_check(language_not_none) == 1:
         return 1
+
+    if f == '':
+        print('description missing')
+        return 1
+    else:
+        print(f)
+
     predict = {
         'title': a,
         'location': b,
@@ -57,9 +64,13 @@ def prediction(a=None,b=None,c=None,d=None,e=None,f=None,g=None,h=None,i=None,j=
 
     add_to_csv(predict)
     df_ = pd.read_csv('new_job.csv')
-    df_ = df_[['title', 'location', 'department', 'salary_range', 'company_profile', 'description', 'requirements',
-               'benefits', 'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
+    # df_ = df_[['title', 'location', 'department', 'salary_range', 'company_profile', 'description', 'requirements',
+    #            'benefits', 'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
+    #            'required_experience', 'required_education', 'industry', 'function']]
+    df_ = df_[['title', 'location', 'department', 'company_profile', 'description', 'requirements',
+               'benefits', 'telecommuting', 'has_company_logo', 'employment_type',
                'required_experience', 'required_education', 'industry', 'function']]
+
     predict_ = rf.label_encoder(df_)
     test = predict_.tail(1)
     print(test, "tail")

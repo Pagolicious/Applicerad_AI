@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_login import UserMixin, LoginManager
-from flask_ckeditor import CKEditor
+# from flask_ckeditor import CKEditor
 
 # from app.controller import user_controller
 
