@@ -1,14 +1,14 @@
 from http import HTTPStatus
 
-from flask import Blueprint, render_template, url_for, current_app, flash, redirect, request, abort
-from flask_login import login_user, login_required, logout_user, current_user
+from flask import Blueprint, render_template, url_for, flash, redirect, abort
+from flask_login import login_user, login_required, logout_user
 from app.controller import job_controller
 from RandomForest import predict
 
 from app.forms import WorkForm, SignupForm, LoginForm
 from .controller import user_controller
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 from .persistance.models import Job
 from .persistance.repository import job_repo
@@ -154,17 +154,6 @@ def update(_id):
     job = job_controller.get_by_job_id(_id)
     job_id = job._id
     all_jobs = job_repo.get_all_jobs()
-
-    # job.company_profile = form.company_profile.data
-    # job.company_logo = form.company_logo.data
-    # title = form.title.data
-    # location = form.location.data
-
-    # employment_type = form.employment_type.data
-    # industry = form.industry.data
-    # salary_range = form.salary_range.data
-    # required_experience = form.required_experience.data
-    # required_education = form.required_education.data
 
     if form.submit_post.data and form.validate():
 
