@@ -16,11 +16,13 @@ def main():
     create_job(title, industry, employment_type, location, company_profile, company_logo,
                salary_range, required_experience, required_education)
 
+
 def user():
     username = input('username: ')
     email = input('email: ')
     password = input('password: ')
     create_user(username, email, password)
+
 
 def get_last_job():
     latest = get_latest_job()

@@ -1,4 +1,3 @@
-import os
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd

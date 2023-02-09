@@ -1,6 +1,4 @@
 from bson import ObjectId
-
-from app.persistance.db import ResultList
 from app.persistance.models import Job
 
 
@@ -17,7 +15,6 @@ def get_latest_job():
 
 
 def get_by_id(_id):
-    # return ResultList(Job(i) for i in Job.collection.find(dict(_id=_id))).first_or_none()
     try:
         return Job(Job.collection.find_one(dict(_id=ObjectId(_id))))
     except TypeError:

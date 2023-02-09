@@ -1,7 +1,6 @@
 from RandomForest import random_forest_model as rf
 from googletrans import Translator
 import pandas as pd
-import csv
 import os
 
 
@@ -64,9 +63,6 @@ def prediction(a=None,b=None,c=None,d=None,e=None,f=None,g=None,h=None,i=None,j=
 
     add_to_csv(predict)
     df_ = pd.read_csv('new_job.csv')
-    # df_ = df_[['title', 'location', 'department', 'salary_range', 'company_profile', 'description', 'requirements',
-    #            'benefits', 'telecommuting', 'has_company_logo', 'has_questions', 'employment_type',
-    #            'required_experience', 'required_education', 'industry', 'function']]
     df_ = df_[['title', 'location', 'department', 'company_profile', 'description', 'requirements',
                'benefits', 'telecommuting', 'has_company_logo', 'employment_type',
                'required_experience', 'required_education', 'industry', 'function']]
@@ -108,16 +104,3 @@ def language_check(language):
     print(fraud)
     if fraud == 1:
         return 1
-
-
-def setup():
-    rf.main()
-    # prediction('Financing Auto(car) sales','US, IL, hazelcrest','hr',35000-73000,'Looking for adventurous people to join a thriving industry.  We offer training and competitive earnings.  Find out why imports are the way to go and view our cars at our website.','If you have experience in financing for auto sales and a great attitude you can work in our Hazelcrest office.  From $500 top $1000 a week by contract.','prior car sales expprior car loan financing exp','profit sharingcar allowancecompany car',0,0,0,'Contract','Associate',None,"Automotive",None)
-    print(prediction(0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1))
-
-
-if __name__ == "__main__":
-    setup()
-    # language_check(['Hello', 'Hi', 'Hejsan svejsan'])
-    # rf.main()
-    # prediction()

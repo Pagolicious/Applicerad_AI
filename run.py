@@ -2,8 +2,6 @@ from app import create_app
 import dotenv
 from RandomForest import random_forest_model
 
-# app = create_app()
-
 
 if __name__ == "__main__":
     random_forest_model.main()

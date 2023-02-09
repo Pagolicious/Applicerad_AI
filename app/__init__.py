@@ -1,8 +1,5 @@
 from flask import Flask
-from flask_login import UserMixin, LoginManager
-# from flask_ckeditor import CKEditor
-
-# from app.controller import user_controller
+from flask_login import LoginManager
 
 login_manager = LoginManager()
 
@@ -13,13 +10,7 @@ def create_app():
 
     _app.config.from_pyfile('settings.py')
 
-    # from app.persistance.db import init_db
-    # init_db(_app)
-
-    # initialize_extensions(_app)
-    login_manager = LoginManager()
     login_manager.init_app(_app)
-
 
     @login_manager.user_loader
     def load_user(username):
@@ -30,11 +21,3 @@ def create_app():
     _app.register_blueprint(bp_user, url_prefix='/')
 
     return _app
-
-# def initialize_extensions(_app):
-#     login_manager.init_app(_app)
-#     login_manager.login_view = 'login'
-# #
-# @login_manager.user_loader
-# def load_user(username):
-#     return user_controller.get_by_username(username)

@@ -5,7 +5,6 @@ class Job(Document):
     collection = db.jobs
 
 
-
 class User(Document):
     collection = db.users
 
@@ -20,6 +19,3 @@ class User(Document):
 
     def get_id(self):
         return self.username
-
-    #def get_id(self):
-       # return self.
